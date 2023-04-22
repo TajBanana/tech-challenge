@@ -31,8 +31,7 @@ public class ConflictForecastController {
 
   @GetMapping(path = "/conflict", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ConflictForecastResponse> getConflictResponse(@RequestBody String jsonConflictRequest) {
-    ConflictForecastResponse response =
-        conflictRequestService.checkConflict(jsonConflictRequest);
+    ConflictForecastResponse response = conflictRequestService.checkConflict(jsonConflictRequest);
     return ResponseEntity.ok(response);
   }
 

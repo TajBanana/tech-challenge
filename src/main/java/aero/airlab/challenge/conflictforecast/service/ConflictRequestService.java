@@ -26,7 +26,7 @@ public class ConflictRequestService {
     System.out.println("From ConflictRequest Service");
     System.out.println(request);
 
-    conflictResponseService.check(request);
+    conflictResponseService.get(request);
 
     //TODO replace with actual response
     return new ConflictForecastResponse(new ArrayList<>());
