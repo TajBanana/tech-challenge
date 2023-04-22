@@ -2,8 +2,8 @@ package aero.airlab.challenge.conflictforecast.service;
 
 import aero.airlab.challenge.conflictforecast.api.*;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
-import aero.airlab.challenge.conflictforecast.util.GeoPointUtil;
-import aero.airlab.challenge.conflictforecast.util.WaypointUtil;
+import aero.airlab.challenge.conflictforecast.util.ReferenceWayPointUtil;
+import aero.airlab.challenge.conflictforecast.util.SeparationRequirementUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,10 +14,12 @@ public class ConflictResponseService {
   private long minTime;
   private long maxTime;
 
-  private final GeoPointUtil geoPointUtil;
+  private final ReferenceWayPointUtil referenceWayPointUtil;
+  private final SeparationRequirementUtil separationRequirementUtil;
 
-  public ConflictResponseService(GeoPointUtil geoPointUtil) {
-    this.geoPointUtil = geoPointUtil;
+  public ConflictResponseService(ReferenceWayPointUtil referenceWayPointUtil, SeparationRequirementUtil separationRequirementUtil) {
+    this.referenceWayPointUtil = referenceWayPointUtil;
+    this.separationRequirementUtil = separationRequirementUtil;
   }
 
   public ConflictForecastResponse get(ConflictForecastRequest request) {
@@ -44,45 +46,21 @@ public class ConflictResponseService {
           continue;
 
         // get current reference geopoint
-        for (int j = 0; j < referenceWaypointList.size(); j++) {
-          if (currentTime < referenceWaypointList.get(j).getTimestamp())
-            continue;
+        referenceGeoPoint =
+            referenceWayPointUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, referenceId);
 
-          Waypoint waypoint = referenceWaypointList.get(j);
-
-          if (currentTime == waypoint.getTimestamp()) {
-            referenceGeoPoint = new GeoPoint(waypoint.getLon(), waypoint.getLat());
-            System.out.println(referenceId);
-            break;
-          }
-          else if (currentTime != waypoint.getTimestamp()) {
-            Waypoint nextWaypoint = referenceWaypointList.get(j + 1);
-            referenceGeoPoint = geoPointUtil.nextGeoPoint(waypoint, nextWaypoint, currentTime);
-            System.out.println(referenceId);
-            break;
-          }
-        }
-
-/*
         for (int k = 0; k < trajectoryList.size(); k++) { //loop all trajectories and compare
           if (k == i) continue; //skip for self
 
 
         }
-*/
       }
 
       currentTime += 5000;
     }
 
-    System.out.println("loop end");
-
     //TODO return conflict response
     return null;
-  }
-
-  private void getSeparationRequirement(List<SeparationRequirement> separationRequirements) {
-    System.out.println(separationRequirements);
   }
 
   private void getMinMaxTime(List<Trajectory> trajectoryList) {
