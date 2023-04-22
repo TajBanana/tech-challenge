@@ -6,6 +6,7 @@ import org.geotools.referencing.CRS
 import org.geotools.referencing.GeodeticCalculator
 import org.geotools.referencing.crs.DefaultGeographicCRS
 import org.locationtech.jts.geom.Coordinate
+import org.springframework.stereotype.Service
 
 private fun IGeoPoint.toCoordinate() = Coordinate(lon, lat)
 

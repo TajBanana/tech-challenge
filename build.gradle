@@ -28,6 +28,8 @@ dependencies {
 	implementation "org.geotools:gt-shapefile:${geotools_version}"
 	implementation "org.geotools:gt-geojson:${geotools_version}"
 	implementation "org.geotools:gt-epsg-hsql:${geotools_version}"
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+	implementation 'org.projectlombok:lombok:1.18.22'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
