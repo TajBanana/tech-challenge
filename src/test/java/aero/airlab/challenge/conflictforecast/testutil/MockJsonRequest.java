@@ -1,17 +1,5 @@
 package aero.airlab.challenge.conflictforecast.testutil;
 
-import aero.airlab.challenge.conflictforecast.api.ConflictForecastRequest;
-import aero.airlab.challenge.conflictforecast.api.Trajectory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.FileCopyUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 public class MockJsonRequest {
 
   static String mockRequestString = """

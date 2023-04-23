@@ -54,7 +54,10 @@ jacocoTestReport {
 					"aero/airlab/challenge/conflictforecast/geospatial/**",
 					"aero/airlab/challenge/conflictforecast/api/**",
 					"aero/airlab/challenge/conflictforecast/api/**",
-					"aero/airlab/challenge/conflictforecast/util/RequestFileReader"
+					"aero/airlab/challenge/conflictforecast/util" +
+							"/RequestFileReader.**",
+					"aero/airlab/challenge/conflictforecast" +
+							"/ConflictForecastApplication.**",
 			])
 		}))
 	}
