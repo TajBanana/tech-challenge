@@ -14,12 +14,12 @@ import java.util.List;
 @Component
 public class ConflictUtil {
 
-  private final ReferenceWayPointUtil waypointUtil;
+  private final WaypointsUtil waypointUtil;
   private final SeparationRequirementUtil separationRequirementUtil;
   private final TimeUtil timeUtil;
   private final GeodeticCalc geodeticCalc = GeodeticCalc.Companion.geodeticCalcWSSS();
 
-  public ConflictUtil(ReferenceWayPointUtil waypointUtil, SeparationRequirementUtil separationRequirementUtil, TimeUtil timeUtil) {
+  public ConflictUtil(WaypointsUtil waypointUtil, SeparationRequirementUtil separationRequirementUtil, TimeUtil timeUtil) {
     this.waypointUtil = waypointUtil;
     this.separationRequirementUtil = separationRequirementUtil;
     this.timeUtil = timeUtil;

@@ -20,13 +20,13 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 
 @ExtendWith(MockitoExtension.class)
-public class ReferenceWayPointUtilTest {
+public class WaypointsUtilTest {
 
   @Mock
   private GeoPointUtil geoPointUtilMock;
 
   @InjectMocks
-  ReferenceWayPointUtil referenceWayPointUtil;
+  WaypointsUtil wayPointsUtil;
 
   @Test
   public void testGetGeoPointAtCurrentTime() {
@@ -42,7 +42,7 @@ public class ReferenceWayPointUtilTest {
     when(geoPointUtilMock.nextGeoPoint(referenceWaypointList.get(0), referenceWaypointList.get(1), currentTime))
         .thenReturn(new GeoPoint(2.0, 3.0));
 
-    GeoPoint result = referenceWayPointUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId);
+    GeoPoint result = wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId);
     Assertions.assertEquals(new GeoPoint(2.0, 3.0), result);
   }
 
@@ -57,7 +57,7 @@ public class ReferenceWayPointUtilTest {
     long currentTime = 200L;
     int trajectoryId = 1;
 
-    GeoPoint result = referenceWayPointUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId);
+    GeoPoint result = wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId);
     Assertions.assertEquals(new GeoPoint(3.0, 4.0), result);
     verify(geoPointUtilMock, times(0)).nextGeoPoint(any(Waypoint.class), any(Waypoint.class), anyLong());
 
@@ -71,7 +71,6 @@ public class ReferenceWayPointUtilTest {
     int trajectoryId = 1;
 
     assertThrows(WayPointListException.class,
-        () -> referenceWayPointUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
-
+        () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
   }
 }

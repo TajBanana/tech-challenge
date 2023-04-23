@@ -8,23 +8,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ReferenceWayPointUtil {
+public class WaypointsUtil {
 
   private final GeoPointUtil geoPointUtil;
-  private final TimeUtil timeUtil;
 
-  public ReferenceWayPointUtil(GeoPointUtil geoPointUtil, TimeUtil timeUtil) {
+  public WaypointsUtil(GeoPointUtil geoPointUtil) {
     this.geoPointUtil = geoPointUtil;
-    this.timeUtil = timeUtil;
   }
 
   public GeoPoint getGeoPointAtCurrentTime(List<Waypoint> waypointList,
                                            long currentTime,
                                            int trajectoryId) {
-    //System.out.println("from util");
-    //System.out.println(currentTime < waypointList.get(0).getTimestamp() ||
-    //    currentTime > waypointList.get(waypointList.size() - 1)
-    //                                       .getTimestamp());
 
     for (int j = 1; j < waypointList.size(); j++) {
       if (currentTime > waypointList.get(j).getTimestamp())
@@ -41,11 +35,6 @@ public class ReferenceWayPointUtil {
       }
     }
 
-
-    System.out.println("min time: " + timeUtil.debugUtilMinTime(waypointList));
-    System.out.println("max time: " + timeUtil.debugUtilMaxTime(waypointList));
-    System.out.println(currentTime);
-    System.out.println(waypointList);
     throw new WayPointListException(String.format("ID: %s | way point list is" +
         " null or empty", trajectoryId));
   }

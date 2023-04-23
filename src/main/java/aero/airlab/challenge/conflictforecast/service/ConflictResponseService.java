@@ -4,7 +4,7 @@ import aero.airlab.challenge.conflictforecast.api.*;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeodeticCalc;
 import aero.airlab.challenge.conflictforecast.util.ConflictUtil;
-import aero.airlab.challenge.conflictforecast.util.ReferenceWayPointUtil;
+import aero.airlab.challenge.conflictforecast.util.WaypointsUtil;
 import aero.airlab.challenge.conflictforecast.util.SeparationRequirementUtil;
 import aero.airlab.challenge.conflictforecast.util.TimeUtil;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ import java.util.List;
 @Service
 public class ConflictResponseService {
 
-  private final ReferenceWayPointUtil wayPointUtil;
+  private final WaypointsUtil wayPointUtil;
   private final TimeUtil timeUtil;
   private final SeparationRequirementUtil separationRequirementUtil;
   private final ConflictUtil conflictUtil;
   private final GeodeticCalc geodeticCalc = GeodeticCalc.Companion.geodeticCalcWSSS();
 
-  public ConflictResponseService(ReferenceWayPointUtil referenceWayPointUtil, TimeUtil timeUtil, SeparationRequirementUtil separationRequirementUtil, ConflictUtil conflictUtil) {
-    this.wayPointUtil = referenceWayPointUtil;
+  public ConflictResponseService(WaypointsUtil wayPointsUtil, TimeUtil timeUtil, SeparationRequirementUtil separationRequirementUtil, ConflictUtil conflictUtil) {
+    this.wayPointUtil = wayPointsUtil;
     this.timeUtil = timeUtil;
     this.separationRequirementUtil = separationRequirementUtil;
     this.conflictUtil = conflictUtil;
@@ -46,13 +46,9 @@ public class ConflictResponseService {
         int referenceId = referenceTrajectory.getId();
 
         //skip if time is not within range
-        if (currentTime < referenceWaypointList.get(0).getTimestamp() ||
-            currentTime > referenceWaypointList.get(referenceWaypointList.size() - 1)
-                                               .getTimestamp())
-          continue;
+        if (timeUtil.timeNotWithinRangeOfWaypoints(currentTime,
+            referenceWaypointList)) continue;
 
-        // get current reference geopoint
-        //System.out.println("reference geopoint");
         GeoPoint referenceGeoPoint =
             wayPointUtil.getGeoPointAtCurrentTime(referenceWaypointList,
                 currentTime, referenceId);
@@ -64,16 +60,9 @@ public class ConflictResponseService {
               comparisonTrajectory.getWaypoints();
           int comparisonId = comparisonTrajectory.getId();
 
-          //System.out.println("from service");
-          //System.out.println(currentTime < comparisonWaypointList.get(0).getTimestamp() ||
-          //    currentTime > comparisonWaypointList.get(comparisonWaypointList.size() - 1)
-          //                                        .getTimestamp());
+          if (timeUtil.timeNotWithinRangeOfWaypoints(currentTime,
+              comparisonWaypointList)) continue;
 
-          if (currentTime < comparisonWaypointList.get(0).getTimestamp() ||
-              currentTime > comparisonWaypointList.get(comparisonWaypointList.size() - 1)
-                                                 .getTimestamp()) continue;
-
-          //System.out.println("comparison geopoint");
           GeoPoint comparisonGeopoint =
               wayPointUtil.getGeoPointAtCurrentTime(comparisonWaypointList,
                   currentTime, comparisonId);
@@ -91,7 +80,6 @@ public class ConflictResponseService {
       currentTime += 5000;
     }
 
-    //TODO return conflict response
     return new ConflictForecastResponse(conflictList);
   }
 }

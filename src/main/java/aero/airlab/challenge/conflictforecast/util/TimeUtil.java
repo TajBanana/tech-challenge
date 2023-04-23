@@ -48,23 +48,10 @@ public class TimeUtil {
     return maxTime;
   }
 
-  public long debugUtilMinTime(List<Waypoint> waypoints) {
-    long minTime = Long.MAX_VALUE;
-
-    for (Waypoint waypoint : waypoints) {
-      long time = waypoint.component3();
-      minTime = Math.min(minTime, time);
-    }
-    return minTime;
-  }
-
-  public long debugUtilMaxTime(List<Waypoint> waypoints) {
-    long maxTime = Long.MIN_VALUE;
-
-    for (Waypoint waypoint : waypoints) {
-      long time = waypoint.component3();
-      maxTime = Math.max(maxTime, time);
-    }
-    return maxTime;
+  public boolean timeNotWithinRangeOfWaypoints(long currentTime,
+                                               List<Waypoint> waypoints) {
+    return currentTime < waypoints.get(0).getTimestamp() ||
+        currentTime > waypoints.get(waypoints.size() - 1)
+                               .getTimestamp();
   }
 }

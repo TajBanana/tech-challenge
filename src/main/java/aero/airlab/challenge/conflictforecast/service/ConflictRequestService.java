@@ -21,9 +21,6 @@ public class ConflictRequestService {
 
   public ConflictForecastResponse checkConflict(String jsonRequest) {
     ConflictForecastRequest request = jsonToConflictRequest(jsonRequest);
-    //System.out.println("From ConflictRequest Service");
-    //System.out.println(request);
-
     return conflictResponseService.check(request);
   }
 }
