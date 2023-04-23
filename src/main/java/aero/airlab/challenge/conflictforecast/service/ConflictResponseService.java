@@ -38,6 +38,10 @@ public class ConflictResponseService {
     long currentTime = minTime;
 
     while (currentTime <= maxTime) {
+
+      System.out.println("current: " + currentTime + " max: " + maxTime);
+      System.out.println(( (double) currentTime - (double) minTime) / ((double) maxTime - (double) minTime) * 100.0 );
+
       for (int referenceTrajectoryIndex = 0; referenceTrajectoryIndex < trajectoryList.size(); referenceTrajectoryIndex++) { //loop all trajectories
         Trajectory referenceTrajectory = trajectoryList.get(referenceTrajectoryIndex);
         List<Waypoint> referenceWaypoints = referenceTrajectory.getWaypoints();

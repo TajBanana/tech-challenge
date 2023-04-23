@@ -19,7 +19,6 @@ public class SeparationRequirementUtil {
     geopoint1Separation = getGeopointSeparation(separationRequirementList, geoPoint1, geopoint1Separation);
     geopoint2Separation = getGeopointSeparation(separationRequirementList,geoPoint2, geopoint2Separation);
 
-
     lateralSeparation = Math.max(geopoint1Separation, geopoint2Separation);
 
     return lateralSeparation;
@@ -42,5 +41,14 @@ public class SeparationRequirementUtil {
       }
     }
     return geopointSeparation;
+  }
+
+  public boolean outOfLargestRequirementRange(SeparationRequirement separationRequirement, GeoPoint geoPoint1, GeoPoint geoPoint2) {
+    GeodeticCalc geodeticCalc = GeodeticCalc.Companion.geodeticCalcWSSS();
+    GeoPoint center = separationRequirement.getCenter();
+    double radius = separationRequirement.getRadius();
+
+    return geodeticCalc.distance(center, geoPoint1) > radius || geodeticCalc.distance(center, geoPoint2) > radius;
+
   }
 }
