@@ -11,35 +11,42 @@ import java.util.List;
 public class ReferenceWayPointUtil {
 
   private final GeoPointUtil geoPointUtil;
+  private final TimeUtil timeUtil;
 
-  public ReferenceWayPointUtil(GeoPointUtil geoPointUtil) {
+  public ReferenceWayPointUtil(GeoPointUtil geoPointUtil, TimeUtil timeUtil) {
     this.geoPointUtil = geoPointUtil;
+    this.timeUtil = timeUtil;
   }
 
-  public GeoPoint getGeoPointAtCurrentTime(List<Waypoint> referenceWaypointList,
-                                           long currentTime, int trajectoryId) {
+  public GeoPoint getGeoPointAtCurrentTime(List<Waypoint> waypointList,
+                                           long currentTime,
+                                           int trajectoryId) {
+    //System.out.println("from util");
+    //System.out.println(currentTime < waypointList.get(0).getTimestamp() ||
+    //    currentTime > waypointList.get(waypointList.size() - 1)
+    //                                       .getTimestamp());
 
-    for (int j = 1; j < referenceWaypointList.size(); j++) {
-      System.out.println(currentTime);
-      System.out.println(referenceWaypointList.get(j).getTimestamp());
-
-      if (currentTime > referenceWaypointList.get(j).getTimestamp())
+    for (int j = 1; j < waypointList.size(); j++) {
+      if (currentTime > waypointList.get(j).getTimestamp())
         continue;
 
-      Waypoint waypoint = referenceWaypointList.get(j);
+      Waypoint waypoint = waypointList.get(j);
 
       if (currentTime == waypoint.getTimestamp()) {
-        //System.out.println(trajectoryId);
-        System.out.println("if loop");
         return new GeoPoint(waypoint.getLon(), waypoint.getLat());
       }
       else {
-        Waypoint previousWaypoint = referenceWaypointList.get(j - 1);
-
+        Waypoint previousWaypoint = waypointList.get(j - 1);
         return geoPointUtil.nextGeoPoint(previousWaypoint, waypoint, currentTime);
       }
     }
 
-    throw new WayPointListException("way point list is null or empty");
+
+    System.out.println("min time: " + timeUtil.debugUtilMinTime(waypointList));
+    System.out.println("max time: " + timeUtil.debugUtilMaxTime(waypointList));
+    System.out.println(currentTime);
+    System.out.println(waypointList);
+    throw new WayPointListException(String.format("ID: %s | way point list is" +
+        " null or empty", trajectoryId));
   }
 }

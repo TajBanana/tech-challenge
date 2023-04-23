@@ -5,8 +5,6 @@ import aero.airlab.challenge.conflictforecast.api.ConflictForecastResponse;
 import aero.airlab.challenge.conflictforecast.mapper.ConflictRequestMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class ConflictRequestService {
   private final ConflictRequestMapper conflictRequestMapper;
@@ -23,12 +21,9 @@ public class ConflictRequestService {
 
   public ConflictForecastResponse checkConflict(String jsonRequest) {
     ConflictForecastRequest request = jsonToConflictRequest(jsonRequest);
-    System.out.println("From ConflictRequest Service");
-    System.out.println(request);
+    //System.out.println("From ConflictRequest Service");
+    //System.out.println(request);
 
-    conflictResponseService.get(request);
-
-    //TODO replace with actual response
-    return new ConflictForecastResponse(new ArrayList<>());
+    return conflictResponseService.check(request);
   }
 }
