@@ -65,12 +65,6 @@ public class ConflictUtil {
         timeUtil.getWayPointsMaxTime(comparisonTrajectory));
 
     while (geodeticCalc.distance(geoPointA, geoPointB) < separationRequirement && currentTime <= maxTime) {
-      //System.out.println("GeopointA: " + geoPointA);
-      //System.out.println("GeopointB: " + geoPointB);
-      //System.out.println("distance: " + geodeticCalc.distance(geoPointA, geoPointB));
-      //System.out.println("requirement: " + separationRequirement);
-
-      //System.out.println("conflict util current time: " + currentTime);
 
       geoPointA =
           waypointUtil.getGeoPointAtCurrentTime(referenceWaypointList,
@@ -93,9 +87,6 @@ public class ConflictUtil {
       currentTime += 5000;
     }
 
-    //System.out.println("distance: " + geodeticCalc.distance(geoPointA, geoPointB));
-
-    // end of provided trajectory = end of conflict
     return new Conflict(trajectoryA, conflictStartA, conflictEndA,
         trajectoryB, conflictStartB, conflictEndB);
   }
