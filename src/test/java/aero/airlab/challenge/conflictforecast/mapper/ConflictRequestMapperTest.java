@@ -6,7 +6,7 @@ import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.exception.MapperException;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
-import aero.airlab.challenge.conflictforecast.testutil.MockJsonRequest;
+import aero.airlab.challenge.conflictforecast.testutil.MockTestRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +23,7 @@ public class ConflictRequestMapperTest {
   @Autowired
   private ConflictRequestMapper conflictRequestMapper;
 
-  private final String validJsonRequest = MockJsonRequest.get();
+  private final String validJsonRequest = MockTestRequest.getJsonRequest();
 
   @Test
   public void testValidJsonToRequest() {
