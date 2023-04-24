@@ -2,7 +2,9 @@ package aero.airlab.challenge.conflictforecast.service;
 
 import aero.airlab.challenge.conflictforecast.api.*;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
-import aero.airlab.challenge.conflictforecast.util.*;
+import aero.airlab.challenge.conflictforecast.util.conflict.ConflictResponseUtil;
+import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
+import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointsUtil;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

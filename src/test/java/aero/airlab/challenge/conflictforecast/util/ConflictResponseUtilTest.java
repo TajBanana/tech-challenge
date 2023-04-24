@@ -6,6 +6,7 @@ import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
 import aero.airlab.challenge.conflictforecast.geospatial.TemporalGeoPoint;
+import aero.airlab.challenge.conflictforecast.util.conflict.ConflictResponseUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

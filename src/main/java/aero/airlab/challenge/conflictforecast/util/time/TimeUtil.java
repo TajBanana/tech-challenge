@@ -1,4 +1,4 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.time;
 
 import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;

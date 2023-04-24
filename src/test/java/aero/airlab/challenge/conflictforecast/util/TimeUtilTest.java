@@ -2,6 +2,7 @@ package aero.airlab.challenge.conflictforecast.util;
 
 import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
+import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

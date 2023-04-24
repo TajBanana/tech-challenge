@@ -1,8 +1,9 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.waypoint;
 
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.exception.WayPointListException;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
+import aero.airlab.challenge.conflictforecast.util.geopoint.GeoPointUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

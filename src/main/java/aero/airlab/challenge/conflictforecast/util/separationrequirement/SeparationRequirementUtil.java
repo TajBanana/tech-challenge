@@ -1,4 +1,4 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.separationrequirement;
 
 import aero.airlab.challenge.conflictforecast.api.SeparationRequirement;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;

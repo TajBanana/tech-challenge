@@ -1,4 +1,4 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.conflict;
 
 import aero.airlab.challenge.conflictforecast.api.Conflict;
 import aero.airlab.challenge.conflictforecast.api.SeparationRequirement;
@@ -6,6 +6,9 @@ import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeodeticCalc;
+import aero.airlab.challenge.conflictforecast.util.separationrequirement.SeparationRequirementUtil;
+import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
+import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,7 +41,8 @@ public class ConflictResponseUtil {
                                      long currentTime) {
     List<Conflict> conflictList = new ArrayList<>();
 
-    for (int trajectoryIndex = 0; trajectoryIndex < trajectoryList.size(); trajectoryIndex++) { //loop all trajectories and compare
+    //loop all trajectories and compare
+    for (int trajectoryIndex = 0; trajectoryIndex < trajectoryList.size(); trajectoryIndex++) {
       //skip for self
       if (trajectoryIndex == referenceTrajectoryIndex) continue;
       Trajectory comparisonTrajectory = trajectoryList.get(trajectoryIndex);
