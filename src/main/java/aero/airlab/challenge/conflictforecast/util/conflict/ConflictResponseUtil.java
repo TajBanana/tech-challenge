@@ -20,15 +20,17 @@ import java.util.List;
 public class ConflictResponseUtil {
   private final WaypointsUtil waypointsUtil;
   private final TimeUtil timeUtil;
+  private final ConflictsMapUtil conflictsMap;
   private final SeparationRequirementUtil separationRequirementUtil;
   private final ConflictUtil conflictUtil;
   private final GeodeticCalc geodeticCalc = GeodeticCalc.Companion.geodeticCalcWSSS();
   private final Logger logger =
       LoggerFactory.getLogger(ConflictResponseUtil.class);
 
-  public ConflictResponseUtil(WaypointsUtil wayPointUtil, TimeUtil timeUtil, SeparationRequirementUtil separationRequirementUtil, ConflictUtil conflictUtil) {
+  public ConflictResponseUtil(WaypointsUtil wayPointUtil, TimeUtil timeUtil, ConflictsMapUtil conflictsMap, SeparationRequirementUtil separationRequirementUtil, ConflictUtil conflictUtil) {
     this.waypointsUtil = wayPointUtil;
     this.timeUtil = timeUtil;
+    this.conflictsMap = conflictsMap;
     this.separationRequirementUtil = separationRequirementUtil;
     this.conflictUtil = conflictUtil;
   }
@@ -45,10 +47,15 @@ public class ConflictResponseUtil {
     for (int trajectoryIndex = 0; trajectoryIndex < trajectoryList.size(); trajectoryIndex++) {
       //skip for self
       if (trajectoryIndex == referenceTrajectoryIndex) continue;
+
       Trajectory comparisonTrajectory = trajectoryList.get(trajectoryIndex);
       List<Waypoint> comparisonWaypointList =
           comparisonTrajectory.getWaypoints();
       int comparisonId = comparisonTrajectory.getId();
+      int referenceId = referenceTrajectory.getId();
+
+      //skip if already checked
+      if (conflictsMap.conflictsSetContains(referenceId, comparisonId)) continue;
 
       //skip if time not within range
       if (timeUtil.timeNotWithinRangeOfWaypoints(currentTime,
@@ -65,12 +72,14 @@ public class ConflictResponseUtil {
       double separationRequirement =
           separationRequirementUtil.lateralSeparation(separationRequirements, referenceGeoPoint, comparisonGeopoint);
 
-      if (geodeticCalc.distance(referenceGeoPoint, comparisonGeopoint) < separationRequirement) {
+      double distance = geodeticCalc.distance(referenceGeoPoint, comparisonGeopoint);
+      if (distance < separationRequirement) {
         Conflict conflict = conflictUtil.getConflict(currentTime, referenceTrajectory,
             comparisonTrajectory, separationRequirements);
         conflictList.add(conflict);
-        logger.warn("Conflict detected at currentTime: {} with " +
-            "separationRequirement: {}. Conflicts: {}", currentTime,
+        logger.warn("Conflict detected at time: {} with " +
+            "distance|separationRequirement: {}|{}. Conflicts: {}",
+            currentTime, distance,
             separationRequirement, conflictList );
       }
     }
