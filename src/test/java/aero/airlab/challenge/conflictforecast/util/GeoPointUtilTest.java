@@ -37,8 +37,8 @@ class GeoPointUtilTest {
 
   @Test
   void shouldReturnHalfTotalDistance() {
-    when(waypointUtil.interpolateGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
-    when(waypointUtil.interpolateGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
+    when(waypointUtil.toGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
+    when(waypointUtil.toGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
 
     GeoPoint geoPoint = geoPointUtil.nextGeoPoint(mockWayPoint, mockNextWayPoint, 5000);
     double roundedGeoPointDistance = Double.parseDouble(decimalFormat.format(geodeticCalc.distance(mockPreviousGeoPoint,
@@ -49,8 +49,8 @@ class GeoPointUtilTest {
 
   @Test
   void shouldReturnQuarterTotalDistance() {
-    when(waypointUtil.interpolateGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
-    when(waypointUtil.interpolateGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
+    when(waypointUtil.toGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
+    when(waypointUtil.toGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
 
     GeoPoint geoPoint = geoPointUtil.nextGeoPoint(mockWayPoint,
         mockNextWayPoint, 2500);
@@ -63,8 +63,8 @@ class GeoPointUtilTest {
 
   @Test
   void shouldReturn3QuarterTotalDistance() {
-    when(waypointUtil.interpolateGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
-    when(waypointUtil.interpolateGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
+    when(waypointUtil.toGeoPoint(mockWayPoint)).thenReturn(mockPreviousGeoPoint);
+    when(waypointUtil.toGeoPoint(mockNextWayPoint)).thenReturn(mockNextGeoPoint);
 
     GeoPoint geoPoint = geoPointUtil.nextGeoPoint(mockWayPoint,
         mockNextWayPoint, 7500);

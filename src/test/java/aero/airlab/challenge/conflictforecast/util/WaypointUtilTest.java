@@ -20,7 +20,7 @@ class WaypointUtilTest {
 
   @Test
   void shouldReturnGeoPoint() {
-    GeoPoint geoPoint = waypointUtil.interpolateGeoPoint(mockWaypoint);
+    GeoPoint geoPoint = waypointUtil.toGeoPoint(mockWaypoint);
 
     assertEquals(geoPoint.getLon(), 101.355);
     assertEquals(geoPoint.getLat(), 1.00355);

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WaypointUtil {
-  public GeoPoint interpolateGeoPoint(Waypoint waypoint) {
+  public GeoPoint toGeoPoint(Waypoint waypoint) {
     return new GeoPoint(waypoint.getLon(), waypoint.getLat());
   }
 }

@@ -19,8 +19,8 @@ public class GeoPointUtil {
 
   public GeoPoint nextGeoPoint(Waypoint waypoint, Waypoint nextWaypoint,
                                long currentTime) {
-    GeoPoint previousGeoPoint = waypointUtil.interpolateGeoPoint(waypoint);
-    GeoPoint nextGeoPoint = waypointUtil.interpolateGeoPoint(nextWaypoint);
+    GeoPoint previousGeoPoint = waypointUtil.toGeoPoint(waypoint);
+    GeoPoint nextGeoPoint = waypointUtil.toGeoPoint(nextWaypoint);
     Pair<Double, Double> headingAndDistance = geodeticCalc
         .headingAndDistanceTo(previousGeoPoint, nextGeoPoint);
     Double heading = headingAndDistance.getFirst();
