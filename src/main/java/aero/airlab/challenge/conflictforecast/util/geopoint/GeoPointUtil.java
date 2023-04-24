@@ -23,8 +23,8 @@ public class GeoPointUtil {
     GeoPoint nextGeoPoint = waypointUtil.interpolateGeoPoint(nextWaypoint);
     Pair<Double, Double> headingAndDistance = geodeticCalc
         .headingAndDistanceTo(previousGeoPoint, nextGeoPoint);
-    Double heading = headingAndDistance.component1();
-    Double distance = headingAndDistance.component2();
+    Double heading = headingAndDistance.getFirst();
+    Double distance = headingAndDistance.getSecond();
     double interpolateDistance =
         distance / (nextWaypoint.getTimestamp() - waypoint.getTimestamp()) * (currentTime - waypoint.getTimestamp());
 

@@ -13,10 +13,10 @@ public class TimeUtil {
     long minTime = Long.MAX_VALUE;
 
     for (Trajectory trajectory : trajectoryList) {
-      List<Waypoint> waypoints = trajectory.component2();
+      List<Waypoint> waypoints = trajectory.getWaypoints();
 
       for (Waypoint waypoint : waypoints) {
-        long time = waypoint.component3();
+        long time = waypoint.getTimestamp();
         minTime = Math.min(minTime, time);
       }
     }
@@ -27,10 +27,10 @@ public class TimeUtil {
     long maxTime = Long.MIN_VALUE;
 
     for (Trajectory trajectory : trajectoryList) {
-      List<Waypoint> waypoints = trajectory.component2();
+      List<Waypoint> waypoints = trajectory.getWaypoints();
 
       for (Waypoint waypoint : waypoints) {
-        long time = waypoint.component3();
+        long time = waypoint.getTimestamp();
         maxTime = Math.max(maxTime, time);
       }
     }
@@ -42,7 +42,7 @@ public class TimeUtil {
 
     List<Waypoint> waypoints = trajectory.getWaypoints();
     for (Waypoint waypoint : waypoints) {
-      long time = waypoint.component3();
+      long time = waypoint.getTimestamp();
       maxTime = Math.max(maxTime, time);
     }
     return maxTime;

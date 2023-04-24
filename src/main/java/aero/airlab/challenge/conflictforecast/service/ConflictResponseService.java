@@ -30,8 +30,8 @@ public class ConflictResponseService {
   }
 
   public ConflictForecastResponse check(ConflictForecastRequest request) {
-    List<Trajectory> trajectoryList = request.component1();
-    List<SeparationRequirement> separationRequirements = request.component2();
+    List<Trajectory> trajectoryList = request.getTrajectories();
+    List<SeparationRequirement> separationRequirements = request.getSeparationRequirements();
     List<Conflict> conflictList = new ArrayList<>();
 
     minTime = timeUtil.getMinTime(trajectoryList);
