@@ -31,4 +31,8 @@ public class ConflictsMapUtil {
   public void clear() {
     conflictsMap.clear();
   }
+
+  public Map<Integer, Set<Integer>> getConflictsMap() {
+    return conflictsMap;
+  }
 }
