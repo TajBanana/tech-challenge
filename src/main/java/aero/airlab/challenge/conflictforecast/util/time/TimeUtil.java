@@ -48,8 +48,8 @@ public class TimeUtil {
     return maxTime;
   }
 
-  public boolean timeNotWithinRangeOfWaypoints(long currentTime,
-                                               List<Waypoint> waypoints) {
+  public boolean notWithinRangeOfWaypoints(long currentTime,
+                                           List<Waypoint> waypoints) {
     return currentTime < waypoints.get(0).getTimestamp() ||
         currentTime > waypoints.get(waypoints.size() - 1)
                                .getTimestamp();

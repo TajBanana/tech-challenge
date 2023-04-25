@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class ConflictResponseUtil {
   private final WaypointsUtil waypointsUtil;
-  private final TimeUtil timeUtil;
+  private final TimeUtil time;
   private final ConflictsMapUtil conflictsMap;
   private final SeparationRequirementUtil separationRequirementUtil;
   private final ConflictUtil conflictUtil;
@@ -29,7 +29,7 @@ public class ConflictResponseUtil {
 
   public ConflictResponseUtil(WaypointsUtil wayPointUtil, TimeUtil timeUtil, ConflictsMapUtil conflictsMap, SeparationRequirementUtil separationRequirementUtil, ConflictUtil conflictUtil) {
     this.waypointsUtil = wayPointUtil;
-    this.timeUtil = timeUtil;
+    this.time = timeUtil;
     this.conflictsMap = conflictsMap;
     this.separationRequirementUtil = separationRequirementUtil;
     this.conflictUtil = conflictUtil;
@@ -37,29 +37,26 @@ public class ConflictResponseUtil {
 
   public List<Conflict> getConflicts(List<Trajectory> trajectoryList,
                                      List<SeparationRequirement> separationRequirements,
-                                     int referenceTrajectoryIndex,
                                      GeoPoint referenceGeoPoint,
                                      Trajectory referenceTrajectory,
                                      long currentTime) {
     List<Conflict> conflictList = new ArrayList<>();
 
     //loop all trajectories and compare
-    for (int trajectoryIndex = 0; trajectoryIndex < trajectoryList.size(); trajectoryIndex++) {
-      //skip for self
-      if (trajectoryIndex == referenceTrajectoryIndex) continue;
-
-      Trajectory comparisonTrajectory = trajectoryList.get(trajectoryIndex);
+    for (Trajectory comparisonTrajectory : trajectoryList) {
       List<Waypoint> comparisonWaypointList =
           comparisonTrajectory.getWaypoints();
       int comparisonId = comparisonTrajectory.getId();
       int referenceId = referenceTrajectory.getId();
 
+      //skip for self
+      if (referenceId == comparisonId) continue;
       //skip if already checked
-      if (conflictsMap.conflictsSetContains(referenceId, comparisonId)) continue;
-
+      if (conflictsMap.conflictsSetContains(referenceId, comparisonId))
+        continue;
       //skip if time not within range
-      if (timeUtil.timeNotWithinRangeOfWaypoints(currentTime,
-          comparisonWaypointList)) continue;
+      if (time.notWithinRangeOfWaypoints(currentTime, comparisonWaypointList))
+        continue;
 
       GeoPoint comparisonGeopoint =
           waypointsUtil.getGeoPointAtCurrentTime(comparisonWaypointList,
@@ -71,16 +68,16 @@ public class ConflictResponseUtil {
 
       double separationRequirement =
           separationRequirementUtil.lateralSeparation(separationRequirements, referenceGeoPoint, comparisonGeopoint);
-
       double distance = geodeticCalc.distance(referenceGeoPoint, comparisonGeopoint);
+
       if (distance < separationRequirement) {
         Conflict conflict = conflictUtil.getConflict(currentTime, referenceTrajectory,
             comparisonTrajectory, separationRequirements);
         conflictList.add(conflict);
         logger.warn("Conflict detected at time: {} with " +
-            "distance|separationRequirement: {}|{}. Conflicts: {}",
+                "distance|separationRequirement: {}|{}. Conflicts: {}",
             currentTime, distance,
-            separationRequirement, conflictList );
+            separationRequirement, conflictList);
       }
     }
     return conflictList;

@@ -64,7 +64,7 @@ class ConflictResponseUtilTest {
 
     List<Conflict> conflicts = conflictResponseUtil.getConflicts(trajectoryList,
         List.of(separationRequirement),
-        0, referenceGeopoint, trajectoryA, 25000);
+        referenceGeopoint, trajectoryA, 25000);
 
     Conflict expectedConflict = new Conflict(
         12345,
@@ -74,9 +74,6 @@ class ConflictResponseUtilTest {
         new TemporalGeoPoint(3.312499999978861E-4, 3.312500000010947E-4, 25000),
         new TemporalGeoPoint(0.002049999999812418, 0.002050000000096983, 40000)
     );
-
     assertEquals(List.of(expectedConflict), conflicts);
-
-
   }
 }

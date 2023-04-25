@@ -45,17 +45,13 @@ public class ConflictResponseService {
     long currentTime = minTime;
 
     while (currentTime <= maxTime) {
-      //System.out.println("current: " + currentTime + " max: " + maxTime);
-      //double progress = ((double) currentTime - (double) minTime) / ((double) maxTime - (double) minTime) * 100.0;
-      //System.out.println(progress);
-
       for (int referenceTrajectoryIndex = 0; referenceTrajectoryIndex < trajectoryList.size(); referenceTrajectoryIndex++) { //loop all trajectories
         Trajectory referenceTrajectory = trajectoryList.get(referenceTrajectoryIndex);
         List<Waypoint> referenceWaypoints = referenceTrajectory.getWaypoints();
         int referenceId = referenceTrajectory.getId();
 
         //skip if time is not within range
-        if (timeUtil.timeNotWithinRangeOfWaypoints(currentTime,
+        if (timeUtil.notWithinRangeOfWaypoints(currentTime,
             referenceWaypoints)) continue;
 
         GeoPoint referenceGeoPoint =
@@ -64,7 +60,6 @@ public class ConflictResponseService {
 
         List<Conflict> conflicts = conflictResponseUtil.getConflicts(trajectoryList,
             separationRequirements,
-            referenceTrajectoryIndex,
             referenceGeoPoint,
             referenceTrajectory,
             currentTime);
