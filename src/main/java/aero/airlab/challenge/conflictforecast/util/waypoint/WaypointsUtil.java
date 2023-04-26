@@ -17,21 +17,26 @@ public class WaypointsUtil {
     this.geoPointUtil = geoPointUtil;
   }
 
-  public GeoPoint getGeoPointAtCurrentTime(List<Waypoint> waypointList,
+  public GeoPoint getGeoPointAtCurrentTime(List<Waypoint> waypoints,
                                            long currentTime,
                                            int trajectoryId) {
 
-    for (int j = 1; j < waypointList.size(); j++) {
-      if (currentTime > waypointList.get(j).getTimestamp())
+    if ( waypoints.size() != 0 && (currentTime < waypoints.get(0).getTimestamp() ||
+        currentTime > waypoints.get(waypoints.size() - 1).getTimestamp()))
+      throw new WayPointListException(String.format("ID: %s | Time is not within range of waypoints", trajectoryId));
+
+
+    for (int j = 1; j < waypoints.size(); j++) {
+      if (currentTime > waypoints.get(j).getTimestamp())
         continue;
 
-      Waypoint waypoint = waypointList.get(j);
+      Waypoint waypoint = waypoints.get(j);
 
       if (currentTime == waypoint.getTimestamp()) {
         return new GeoPoint(waypoint.getLon(), waypoint.getLat());
       }
       else {
-        Waypoint previousWaypoint = waypointList.get(j - 1);
+        Waypoint previousWaypoint = waypoints.get(j - 1);
         return geoPointUtil.nextGeoPoint(previousWaypoint, waypoint, currentTime);
       }
     }

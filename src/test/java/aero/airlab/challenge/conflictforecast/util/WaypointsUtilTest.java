@@ -75,4 +75,34 @@ public class WaypointsUtilTest {
     assertThrows(WayPointListException.class,
         () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
   }
+
+  @Test
+  public void testWayPointWhenTimeMoreThanRange() {
+    List<Waypoint> referenceWaypointList = Arrays.asList(
+        new Waypoint(1.0, 2.0, 100L),
+        new Waypoint(3.0, 4.0, 200L),
+        new Waypoint(5.0, 6.0, 300L)
+    );
+
+    long currentTime = 350L;
+    int trajectoryId = 1;
+
+    assertThrows(WayPointListException.class,
+        () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
+  }
+
+  @Test
+  public void testWayPointWhenTimeLessThanRange() {
+    List<Waypoint> referenceWaypointList = Arrays.asList(
+        new Waypoint(1.0, 2.0, 100L),
+        new Waypoint(3.0, 4.0, 200L),
+        new Waypoint(5.0, 6.0, 300L)
+    );
+
+    long currentTime = 50L;
+    int trajectoryId = 1;
+
+    assertThrows(WayPointListException.class,
+        () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
+  }
 }
