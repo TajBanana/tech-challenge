@@ -6,7 +6,6 @@ import aero.airlab.challenge.conflictforecast.util.conflict.ConflictResponseUtil
 import aero.airlab.challenge.conflictforecast.util.conflict.ConflictsMapUtil;
 import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
 import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointsUtil;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +13,6 @@ import java.util.List;
 
 @Service
 public class ConflictResponseService {
-
-  @Getter
-  private long minTime;
-  @Getter
-  private long maxTime;
 
   private final WaypointsUtil waypointsUtil;
   private final TimeUtil timeUtil;
@@ -39,8 +33,8 @@ public class ConflictResponseService {
 
     conflictsMap.clear();
 
-    minTime = timeUtil.getMinTime(trajectoryList);
-    maxTime = timeUtil.getMaxTime(trajectoryList);
+    long minTime = timeUtil.getMinTime(trajectoryList);
+    long maxTime = timeUtil.getMaxTime(trajectoryList);
 
     long currentTime = minTime;
 
