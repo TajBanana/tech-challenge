@@ -37,6 +37,9 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation "io.kotest:kotest-assertions-core:${kotest_version}"
 	testImplementation 'junit:junit:4.13.1'
+
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
 tasks.withType(KotlinCompile) {
