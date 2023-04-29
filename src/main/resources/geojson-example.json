@@ -19,7 +19,7 @@
 
       "properties": {
         "timestamp": 1569888538461,
-        "Trajectories": "2 - 1418"
+        "trajectories": "2 - 1418"
       }
     },
     {
@@ -40,7 +40,7 @@
 
       "properties": {
         "timestamp": 1569888538461,
-        "Trajectories": "2 - 1418"
+        "trajectories": "2 - 1418"
       }
     }
   ]
