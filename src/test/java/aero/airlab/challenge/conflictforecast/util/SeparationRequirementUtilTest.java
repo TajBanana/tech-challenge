@@ -2,6 +2,7 @@ package aero.airlab.challenge.conflictforecast.util;
 
 import aero.airlab.challenge.conflictforecast.api.SeparationRequirement;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
+import aero.airlab.challenge.conflictforecast.util.separationrequirement.SeparationRequirementUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -60,5 +61,33 @@ class SeparationRequirementUtilTest {
         Arrays.asList(requirement1, requirement2), geoPoint1, geoPoint2), 0.0);
     assertEquals(10000.0, separationRequirementUtil.lateralSeparation(
         Arrays.asList(requirement1, requirement2), geoPoint2, geoPoint1), 0.0);
+  }
+
+  @Test
+  void testOutOfRangeTrue() {
+    GeoPoint geoPoint1 = new GeoPoint(0.0, 0.01);
+    GeoPoint geoPoint2 = new GeoPoint(0.0, 1.0);
+    SeparationRequirement separationRequirement = new SeparationRequirement(
+        new GeoPoint(0.0, 0.0), 10000.0, 10000.0);
+
+    boolean outOfLargestRequirementRange = separationRequirementUtil.outOfLargestRequirementRange(separationRequirement,
+        geoPoint1, geoPoint2);
+
+    assertTrue(outOfLargestRequirementRange);
+
+  }
+
+  @Test
+  void testOutOfRangeFalse() {
+    GeoPoint geoPoint1 = new GeoPoint(0.0, 0.01);
+    GeoPoint geoPoint2 = new GeoPoint(0.0, 0.05);
+    SeparationRequirement separationRequirement = new SeparationRequirement(
+        new GeoPoint(0.0, 0.0), 10000.0, 10000.0);
+
+    boolean outOfLargestRequirementRange = separationRequirementUtil.outOfLargestRequirementRange(separationRequirement,
+        geoPoint1, geoPoint2);
+
+    assertFalse(outOfLargestRequirementRange);
+
   }
 }

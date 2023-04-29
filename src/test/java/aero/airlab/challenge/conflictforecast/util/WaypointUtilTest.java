@@ -2,6 +2,7 @@ package aero.airlab.challenge.conflictforecast.util;
 
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
+import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.time;
 
 import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
@@ -13,10 +13,10 @@ public class TimeUtil {
     long minTime = Long.MAX_VALUE;
 
     for (Trajectory trajectory : trajectoryList) {
-      List<Waypoint> waypoints = trajectory.component2();
+      List<Waypoint> waypoints = trajectory.getWaypoints();
 
       for (Waypoint waypoint : waypoints) {
-        long time = waypoint.component3();
+        long time = waypoint.getTimestamp();
         minTime = Math.min(minTime, time);
       }
     }
@@ -27,10 +27,10 @@ public class TimeUtil {
     long maxTime = Long.MIN_VALUE;
 
     for (Trajectory trajectory : trajectoryList) {
-      List<Waypoint> waypoints = trajectory.component2();
+      List<Waypoint> waypoints = trajectory.getWaypoints();
 
       for (Waypoint waypoint : waypoints) {
-        long time = waypoint.component3();
+        long time = waypoint.getTimestamp();
         maxTime = Math.max(maxTime, time);
       }
     }
@@ -42,14 +42,14 @@ public class TimeUtil {
 
     List<Waypoint> waypoints = trajectory.getWaypoints();
     for (Waypoint waypoint : waypoints) {
-      long time = waypoint.component3();
+      long time = waypoint.getTimestamp();
       maxTime = Math.max(maxTime, time);
     }
     return maxTime;
   }
 
-  public boolean timeNotWithinRangeOfWaypoints(long currentTime,
-                                               List<Waypoint> waypoints) {
+  public boolean notWithinRangeOfWaypoints(long currentTime,
+                                           List<Waypoint> waypoints) {
     return currentTime < waypoints.get(0).getTimestamp() ||
         currentTime > waypoints.get(waypoints.size() - 1)
                                .getTimestamp();

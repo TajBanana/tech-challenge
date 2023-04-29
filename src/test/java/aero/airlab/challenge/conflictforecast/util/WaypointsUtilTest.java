@@ -3,6 +3,8 @@ package aero.airlab.challenge.conflictforecast.util;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.exception.WayPointListException;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
+import aero.airlab.challenge.conflictforecast.util.geopoint.GeoPointUtil;
+import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointsUtil;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -68,6 +70,36 @@ public class WaypointsUtilTest {
 
     List<Waypoint> referenceWaypointList = new ArrayList<>();
     long currentTime = 150L;
+    int trajectoryId = 1;
+
+    assertThrows(WayPointListException.class,
+        () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
+  }
+
+  @Test
+  public void testWayPointWhenTimeMoreThanRange() {
+    List<Waypoint> referenceWaypointList = Arrays.asList(
+        new Waypoint(1.0, 2.0, 100L),
+        new Waypoint(3.0, 4.0, 200L),
+        new Waypoint(5.0, 6.0, 300L)
+    );
+
+    long currentTime = 350L;
+    int trajectoryId = 1;
+
+    assertThrows(WayPointListException.class,
+        () -> wayPointsUtil.getGeoPointAtCurrentTime(referenceWaypointList, currentTime, trajectoryId));
+  }
+
+  @Test
+  public void testWayPointWhenTimeLessThanRange() {
+    List<Waypoint> referenceWaypointList = Arrays.asList(
+        new Waypoint(1.0, 2.0, 100L),
+        new Waypoint(3.0, 4.0, 200L),
+        new Waypoint(5.0, 6.0, 300L)
+    );
+
+    long currentTime = 50L;
     int trajectoryId = 1;
 
     assertThrows(WayPointListException.class,

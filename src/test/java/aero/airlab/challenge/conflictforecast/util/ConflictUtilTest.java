@@ -6,9 +6,9 @@ import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
 import aero.airlab.challenge.conflictforecast.geospatial.TemporalGeoPoint;
+import aero.airlab.challenge.conflictforecast.util.conflict.ConflictUtil;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,11 +17,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class ConflictUtilTest {
+
   @Autowired
-  ConflictUtil conflictUtil;
+  private ConflictUtil conflictUtil;
 
   @Test
   public void shouldReturnEntirePathConflict() {

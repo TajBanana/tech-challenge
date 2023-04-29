@@ -2,6 +2,7 @@ package aero.airlab.challenge.conflictforecast.util;
 
 import aero.airlab.challenge.conflictforecast.api.Trajectory;
 import aero.airlab.challenge.conflictforecast.api.Waypoint;
+import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +60,7 @@ public class TimeUtilTest {
     waypoints.add(new Waypoint(10.0, 20.0, 1000L));
     waypoints.add(new Waypoint(20.0, 30.0, 2000L));
     long currentTime = 3000L;
-    assertTrue(timeUtil.timeNotWithinRangeOfWaypoints(currentTime, waypoints));
+    assertTrue(timeUtil.notWithinRangeOfWaypoints(currentTime, waypoints));
   }
 
   @Test
@@ -68,6 +69,6 @@ public class TimeUtilTest {
     waypoints.add(new Waypoint(10.0, 20.0, 1000L));
     waypoints.add(new Waypoint(20.0, 30.0, 2000L));
     long currentTime = 1500L;
-    assertFalse(timeUtil.timeNotWithinRangeOfWaypoints(currentTime, waypoints));
+    assertFalse(timeUtil.notWithinRangeOfWaypoints(currentTime, waypoints));
   }
 }

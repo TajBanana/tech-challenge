@@ -1,4 +1,4 @@
-package aero.airlab.challenge.conflictforecast.util;
+package aero.airlab.challenge.conflictforecast.util.conflict;
 
 import aero.airlab.challenge.conflictforecast.api.Conflict;
 import aero.airlab.challenge.conflictforecast.api.SeparationRequirement;
@@ -7,6 +7,9 @@ import aero.airlab.challenge.conflictforecast.api.Waypoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeoPoint;
 import aero.airlab.challenge.conflictforecast.geospatial.GeodeticCalc;
 import aero.airlab.challenge.conflictforecast.geospatial.TemporalGeoPoint;
+import aero.airlab.challenge.conflictforecast.util.separationrequirement.SeparationRequirementUtil;
+import aero.airlab.challenge.conflictforecast.util.time.TimeUtil;
+import aero.airlab.challenge.conflictforecast.util.waypoint.WaypointsUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,10 +37,10 @@ public class ConflictUtil {
     int trajectoryB = comparisonTrajectory.getId();
     List<Waypoint> referenceWaypointList = referenceTrajectory.getWaypoints();
     List<Waypoint> comparisonWaypointList = comparisonTrajectory.getWaypoints();
+
     GeoPoint referenceGeoPoint =
         waypointUtil.getGeoPointAtCurrentTime(referenceWaypointList,
         time, referenceTrajectory.getId());
-
     GeoPoint comparisonGeoPoint =
         waypointUtil.getGeoPointAtCurrentTime(comparisonWaypointList,
             time, comparisonTrajectory.getId());
@@ -45,14 +48,12 @@ public class ConflictUtil {
     TemporalGeoPoint conflictStartA =
         new TemporalGeoPoint(referenceGeoPoint.getLon(),
             referenceGeoPoint.getLat(), time);
-
     TemporalGeoPoint conflictStartB =
         new TemporalGeoPoint(comparisonGeoPoint.getLon(),
             comparisonGeoPoint.getLat(), time);
 
     TemporalGeoPoint conflictEndA = null;
     TemporalGeoPoint conflictEndB = null;
-
 
     GeoPoint geoPointA = referenceGeoPoint;
     GeoPoint geoPointB = comparisonGeoPoint;
@@ -65,12 +66,6 @@ public class ConflictUtil {
         timeUtil.getWayPointsMaxTime(comparisonTrajectory));
 
     while (geodeticCalc.distance(geoPointA, geoPointB) < separationRequirement && currentTime <= maxTime) {
-      //System.out.println("GeopointA: " + geoPointA);
-      //System.out.println("GeopointB: " + geoPointB);
-      //System.out.println("distance: " + geodeticCalc.distance(geoPointA, geoPointB));
-      //System.out.println("requirement: " + separationRequirement);
-
-      //System.out.println("conflict util current time: " + currentTime);
 
       geoPointA =
           waypointUtil.getGeoPointAtCurrentTime(referenceWaypointList,
@@ -93,9 +88,6 @@ public class ConflictUtil {
       currentTime += 5000;
     }
 
-    //System.out.println("distance: " + geodeticCalc.distance(geoPointA, geoPointB));
-
-    // end of provided trajectory = end of conflict
     return new Conflict(trajectoryA, conflictStartA, conflictEndA,
         trajectoryB, conflictStartB, conflictEndB);
   }
